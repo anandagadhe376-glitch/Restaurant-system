@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <title>Veg POS Login</title>
 
   <style>
@@ -12,38 +14,40 @@
     }
 
     body {
-      height: 100vh;
-      overflow: hidden;
+      min-height: 100vh;
       background: linear-gradient(270deg, #001a00, #003300, #001a00);
       background-size: 600% 600%;
       animation: bgMove 10s infinite;
       display: flex;
       justify-content: center;
       align-items: center;
+      padding: 20px;
     }
 
     @keyframes bgMove {
-      0% {background-position: 0% 50%;}
-      50% {background-position: 100% 50%;}
-      100% {background-position: 0% 50%;}
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
+    /* Food images - hidden on small screens */
     .food {
-      position: absolute;
+      position: fixed;
       width: 120px;
       border-radius: 20px;
       animation: float 6s infinite ease-in-out, rotate 20s linear infinite;
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      z-index: 1;
     }
 
-    .f1 { top: 10%; left: 10%; }
-    .f2 { top: 70%; left: 15%; }
-    .f3 { top: 20%; right: 10%; }
-    .f4 { bottom: 10%; right: 20%; }
+    .f1 { top: 10%; left: 5%; }
+    .f2 { top: 70%; left: 5%; }
+    .f3 { top: 10%; right: 5%; }
+    .f4 { bottom: 10%; right: 5%; }
 
     @keyframes float {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-40px); }
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-30px); }
     }
 
     @keyframes rotate {
@@ -54,43 +58,48 @@
     .login-box {
       position: relative;
       z-index: 2;
-      width: 360px;
-      padding: 40px;
+      width: 100%;
+      max-width: 400px;
+      padding: 40px 36px;
       border-radius: 20px;
       background: rgba(255,255,255,0.08);
       backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border: 1px solid rgba(255,255,255,0.2);
-      box-shadow: 0 0 40px rgba(0, 255, 100, 0.4);
+      box-shadow: 0 0 40px rgba(0, 255, 100, 0.3);
       text-align: center;
       color: white;
-      animation: fadeIn 1.5s ease;
+      animation: fadeIn 1.2s ease;
     }
 
     @keyframes fadeIn {
-      from {opacity: 0; transform: translateY(50px);}
-      to {opacity: 1; transform: translateY(0);}
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .logo {
-      font-size: 30px;
-      margin-bottom: 10px;
+      font-size: 32px;
+      margin-bottom: 8px;
       color: #00e676;
       text-shadow: 0 0 10px #00e676;
     }
 
     h2 {
-      margin-bottom: 20px;
+      margin-bottom: 24px;
+      font-size: 20px;
+      font-weight: 600;
     }
 
     input {
       width: 100%;
-      padding: 12px;
-      margin: 10px 0;
+      padding: 13px 15px;
+      margin: 8px 0;
       border: none;
       border-radius: 10px;
       background: rgba(255,255,255,0.15);
       color: white;
       outline: none;
+      font-size: 15px;
       transition: 0.3s;
     }
 
@@ -100,24 +109,30 @@
     }
 
     input::placeholder {
-      color: #ccc;
+      color: rgba(255,255,255,0.6);
     }
 
     button {
       width: 100%;
-      padding: 12px;
+      padding: 13px;
+      margin-top: 10px;
       border: none;
       border-radius: 10px;
       background: linear-gradient(45deg, #00c853, #69f0ae);
-      color: black;
+      color: #003300;
+      font-size: 16px;
       font-weight: bold;
       cursor: pointer;
       transition: 0.3s;
     }
 
     button:hover {
-      transform: scale(1.05);
+      transform: scale(1.03);
       box-shadow: 0 0 20px #69f0ae;
+    }
+
+    button:active {
+      transform: scale(0.98);
     }
 
     #error-msg {
@@ -133,24 +148,88 @@
       color: #69f0ae;
       min-height: 20px;
     }
+
+    /* ===== MOBILE (480px se chota) ===== */
+    @media (max-width: 480px) {
+      body {
+        padding: 16px;
+        align-items: center;
+      }
+
+      /* Food images mobile pe chupa do - clutter avoid */
+      .food {
+        display: none;
+      }
+
+      .login-box {
+        padding: 32px 24px;
+        border-radius: 16px;
+        max-width: 100%;
+      }
+
+      .logo {
+        font-size: 26px;
+      }
+
+      h2 {
+        font-size: 18px;
+        margin-bottom: 20px;
+      }
+
+      input {
+        padding: 14px 15px;
+        font-size: 16px; /* 16px se kam ho to iOS zoom karta he */
+        border-radius: 8px;
+      }
+
+      button {
+        padding: 14px;
+        font-size: 15px;
+        border-radius: 8px;
+      }
+    }
+
+    /* ===== TABLET (481px - 768px) ===== */
+    @media (min-width: 481px) and (max-width: 768px) {
+      .food {
+        width: 80px;
+      }
+
+      .login-box {
+        max-width: 380px;
+        padding: 36px 30px;
+      }
+    }
+
+    /* ===== LAPTOP/DESKTOP (769px+) ===== */
+    @media (min-width: 769px) {
+      .food {
+        width: 110px;
+      }
+
+      .f1 { top: 8%; left: 8%; }
+      .f2 { top: 65%; left: 8%; }
+      .f3 { top: 8%; right: 8%; }
+      .f4 { bottom: 8%; right: 12%; }
+    }
   </style>
 </head>
 
 <body>
 
 <!-- VEG FOOD IMAGES -->
-<img class="food f1" src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd">
-<img class="food f2" src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c">
-<img class="food f3" src="https://images.unsplash.com/photo-1504674900247-0877df9cc836">
-<img class="food f4" src="https://images.unsplash.com/photo-1543353071-087092ec393a">
+<img class="food f1" src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=200" alt="">
+<img class="food f2" src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=200" alt="">
+<img class="food f3" src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=200" alt="">
+<img class="food f4" src="https://images.unsplash.com/photo-1543353071-087092ec393a?w=200" alt="">
 
-<!-- LOGIN -->
+<!-- LOGIN BOX -->
 <div class="login-box">
   <div class="logo">🌿 Veg POS</div>
   <h2>Welcome Back</h2>
 
-  <input id="email" type="email" placeholder="Email (User ID)">
-  <input id="password" type="password" placeholder="Password">
+  <input id="email" type="email" placeholder="Email (User ID)" autocomplete="email">
+  <input id="password" type="password" placeholder="Password" autocomplete="current-password">
 
   <button onclick="login()">Login</button>
 
@@ -177,10 +256,10 @@
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 
-  // Agar user pehle se logged in hai toh seedha panel pe bhejo
+  // Agar user pehle se logged in hai toh seedha login.html pe bhejo
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      window.location.href = "main.html";
+      window.location.href = "login.html";
     }
   });
 
@@ -202,11 +281,14 @@
     signInWithEmailAndPassword(auth, email, password)
       .then(() => {
         loadingMsg.innerText = "✅ Login ho raha hai...";
-        // onAuthStateChanged redirect karega
       })
       .catch((error) => {
         loadingMsg.innerText = "";
-        if (error.code === "auth/user-not-found" || error.code === "auth/wrong-password" || error.code === "auth/invalid-credential") {
+        if (
+          error.code === "auth/user-not-found" ||
+          error.code === "auth/wrong-password" ||
+          error.code === "auth/invalid-credential"
+        ) {
           errorMsg.innerText = "❌ Wrong Email ya Password!";
         } else if (error.code === "auth/invalid-email") {
           errorMsg.innerText = "❌ Email format sahi nahi hai!";
@@ -214,9 +296,7 @@
           errorMsg.innerText = "❌ Error: " + error.message;
         }
       });
-  }
-  window.location.href = "client/login.html";
-
+  };
 </script>
 
 </body>
